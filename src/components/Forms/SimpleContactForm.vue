@@ -1,5 +1,6 @@
 <template>
   <form
+    ref="form"
     class="w-full bg-white px-8 flex flex-col gap-4 pb-8"
     @submit.prevent="prepareEmail"
   >
@@ -27,6 +28,7 @@
           <input
             type="text"
             id="nombre"
+            name="nombre"
             v-model="formData.personName.val"
             :class="{ incomplete: !formData.personName.complete }"
             @keypress.enter.prevent="prepareEmail"
@@ -38,6 +40,7 @@
           <input
             type="text"
             id="nombreInstitucion"
+            name="institucion"
             v-model="formData.orgName.val"
             @keypress.enter.prevent="prepareEmail"
           />
@@ -47,6 +50,7 @@
           <input
             type="text"
             id="unidad"
+            name="unidad"
             v-model="formData.unitName.val"
             @keypress.enter.prevent="prepareEmail"
           />
@@ -56,6 +60,7 @@
           <input
             type="email"
             id="mail"
+            name="mail"
             v-model="formData.email.val"
             :class="{ incomplete: !formData.email.complete }"
             @keypress.enter.prevent="prepareEmail"
@@ -67,6 +72,7 @@
           <input
             type="text"
             id="telefono"
+            name="telefono"
             v-model="formData.phoneNumber.val"
             :class="{ incomplete: !formData.phoneNumber.complete }"
             placeholder="Ej: 1122223333"
@@ -80,7 +86,8 @@
           >
           <textarea
             id="consulta"
-            rows="5"
+            rows="3"
+            name="consulta"
             v-model="formData.question.val"
             :class="{ incomplete: !formData.question.complete }"
             @keypress.enter.prevent="prepareEmail"
@@ -115,6 +122,7 @@
 <script>
 import { contactMixin } from "../../assets/js/contactMixin";
 import { validationMixins } from "../../assets/js/validationMixin";
+import emailjs from 'emailjs-com'
 
 export default {
   mixins: [contactMixin, validationMixins],
@@ -150,7 +158,7 @@ export default {
     };
   },
   methods: {
-    prepareEmail() {
+    prepareEmail(e) {
       const fields = [
         this.formData.personName,
         this.formData.email,
@@ -159,15 +167,39 @@ export default {
       ];
       this.unsetComplete(fields);
       this.validateFields(fields);
-      this.sendMail();
+      console.log(e.target)
+      this.sendMail(e.target);
     },
     markAsCompleted(field) {
       field.complete = true;
     },
-    sendMail: function () {
+    sendMail: function (dato) {
       let submitButton = document.getElementById("sendEmail");
       submitButton.innerHTML = "Enviando...";
-      this.sendEMail();
+      emailjs.sendForm('service_mailweb','contact_template',this.$refs.form,'7L68zCfT1wnoX0EhR')
+      .then((result) => {
+        submitButton.innerHTML = "Enviado!";
+          this.resetInner(submitButton)
+          this.resetForm();        
+      })
+      .catch((error) => {
+        submitButton.innerHTML = "No se pudo enviar."
+        this.resetInner(submitButton)
+        console.log(error)
+      });
+    },
+    resetInner: function (boton) {
+      setTimeout(() => {
+            boton.innerHTML = "Enviar consulta"
+          }, 3000);
+    },
+    resetForm: function () {
+      this.formData.personName.val = "";
+      this.formData.orgName.val = "";
+      this.formData.unitName.val = "";
+      this.formData.email.val = "";
+      this.formData.phoneNumber.val = "";
+      this.formData.question.val = "";
     },
   },
 };

@@ -79,14 +79,14 @@
         <div class="staff-description-card flex">
           <img
             :src="
-              require('@/assets/images/contacto/fotosPersonal/daniel_penhos.jpg')
+              require('@/assets/images/contacto/fotosPersonal/GERENTE_Daniel_Penhos.jpg')
             "
             width="310"
           />
           <div class="flex flex-col gap-3 px-16 py-12">
             <div>
               <h2 class="inge-text-bold text-3xl mb-2">Daniel Penhos</h2>
-              <titles subtitle="Gerente Operativo"></titles>
+              <titles :font-size="30" subtitle="Gerente Operativo"></titles>
               <titles title="Área Técnico Comercial" :fontSize="24"></titles>
             </div>
             <p class="text-xl leading-8 text-justify">
@@ -107,14 +107,14 @@
         <div class="staff-description-card flex">
           <img
             :src="
-              require('@/assets/images/contacto/fotosPersonal/matias_penhos.jpg')
+              require('@/assets/images/contacto/fotosPersonal/GERENTE_Matías_Penhos.jpg')
             "
             width="310"
           />
           <div class="flex flex-col gap-3 px-16 py-12">
             <div>
               <h2 class="inge-text-bold text-3xl mb-2">Matías Penhos</h2>
-              <titles subtitle="Gerente Operativo"></titles>
+              <titles :font-size="30" subtitle="Gerente Operativo"></titles>
               <titles title="Área Técnico Comercial" :fontSize="24"></titles>
             </div>
             <p class="text-xl leading-8 text-justify">
@@ -220,11 +220,13 @@
       </text-checklist>
     </div>
     <!-- Banner de Quienes Somos -->
-    <img
+    <div class="ajuste-padding">
+      <img
       :src="`${this.$imageCDN}/banner_colaboradores.jpg`"
       alt="Banner de Colaboradores"
       class="-mt-8"
-    />
+      />
+    </div>
     <!-- Certificaciones -->
     <div class="padding-container flex flex-col gap-4 -mt-8 py-16 bg-white">
       <titles
@@ -289,6 +291,12 @@
 }
 .gray-text {
   color: #666666;
+}
+@media screen and (min-width: 1441px) {
+  .ajuste-padding {
+    padding: 0 22%
+  }
+  
 }
 </style>
 <script>

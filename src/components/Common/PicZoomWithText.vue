@@ -54,6 +54,9 @@
     height: fit-content;
     position: relative;
     overflow: hidden;
+    box-shadow: 6px 7px 38px -7px rgba(0,0,0,0.45);
+-webkit-box-shadow: 6px 7px 38px -7px rgba(0,0,0,0.45);
+-moz-box-shadow: 6px 7px 38px -7px rgba(0,0,0,0.45);
   }
   .mask {
     position: absolute;

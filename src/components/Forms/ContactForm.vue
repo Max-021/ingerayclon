@@ -1,11 +1,11 @@
 <template>
   <div class="form-container">
     <div class="body h-full px-12 py-8">
-      <form class="h-full w-full relative" action="#">
+      <form class="h-full w-full relative" action="#" ref="pasosForm">
         <button
           class="close-button h-5 w-5 absolute right-0"
           type="button"
-          @click="$emit('closeModal')"
+          @click="$emit('close')"
         >
           <span>&times;</span>
         </button>
@@ -77,6 +77,7 @@
                 name="nombre"
                 v-model="form.nombrePersona.val"
                 @change="marcaloComoCompletado(form.nombrePersona)"
+                required
               />
             </div>
             <div
@@ -90,6 +91,7 @@
                 name="apellido"
                 v-model="form.apellidoPersona.val"
                 @change="marcaloComoCompletado(form.apellidoPersona)"
+                required
               />
             </div>
             <div
@@ -99,10 +101,11 @@
               <label for="email">Dirección de correo eléctronico *</label>
               <input
                 class="input-text flex-grow"
-                type="text"
+                type="email"
                 name="email"
                 v-model="form.emailPersona.val"
                 @change="marcaloComoCompletado(form.emailPersona)"
+                required
               />
             </div>
             <div class="field" :class="{ incomplete: !form.telefono.complete }">
@@ -113,6 +116,7 @@
                 name="telefono"
                 v-model="form.telefono.val"
                 @change="marcaloComoCompletado(form.telefono)"
+                required
               />
             </div>
           </div>
@@ -128,6 +132,7 @@
                 type="text"
                 name="empresa"
                 v-model="form.nombreEmpresa.val"
+                required
               />
             </div>
             <div class="field">
@@ -135,7 +140,7 @@
               <input
                 class="input-text"
                 type="text"
-                name="instiitucion"
+                name="institucion"
                 v-model="form.nombreInstitucion.val"
               />
             </div>
@@ -206,6 +211,7 @@
                 cols="30"
                 rows="5"
                 v-model="form.comentarios.val"
+                required
               ></textarea>
             </div>
           </div>
@@ -229,7 +235,7 @@
           <button class="next" @click="nextStep" v-if="this.currentStep < 3">
             Siguiente
           </button>
-          <button class="next" @click="enviarFormulario" v-else>Enviar</button>
+          <button id="send-btn" class="next" @click="enviarFormulario" v-else>Enviar</button>
         </div>
       </form>
     </div>
@@ -420,6 +426,7 @@ button:focus {
 </style>
 <script>
 import { validationMixins } from "../../assets/js/validationMixin";
+import emailjs from 'emailjs-com'
 
 export default {
   mixins: [validationMixins],
@@ -500,6 +507,7 @@ export default {
     nextStep(e) {
       this.disableAllSteps();
       let form = this.form;
+      let isCompleted = '';
       let steps1 = [
         form.nombrePersona,
         form.apellidoPersona,
@@ -510,16 +518,20 @@ export default {
       this.unsetComplete(steps1);
       switch (this.currentStep) {
         case 1:
-          this.validateFields(steps1);
+          this.unsetComplete(steps1)
+          isCompleted = this.validateFields(steps1);
           break;
         case 2:
           this.unsetComplete(steps2);
-          this.validateFields(steps2);
+          isCompleted = this.validateFields(steps2);
         default:
           break;
       }
       e.preventDefault();
-      this.setActiveStep(this.currentStep);
+      if(isCompleted) {
+        this.setActiveStep(this.currentStep + 1);
+        this.currentStep += 1;
+      }
     },
     previousStep(e) {
       this.disableAllSteps();
@@ -529,9 +541,23 @@ export default {
     },
     enviarFormulario(e) {
       let form = this.form;
+      let submitButton = document.getElementById('send-btn');
+      submitButton.innerHTML = "Enviando..."
       let steps3 = [form.dudaPrincipal, form.informacionAtencion];
       if (this.fieldsNotEmpty(steps3)) {
+        let datosParaMail = this.generarDatosParaEnviar()
         console.log("Se envia nomasss");
+        emailjs.send('servicio_pasos','pasos_template',datosParaMail,'pGxKgw8iNLllj7wgL')
+          .then((result) => {
+            submitButton.innerHTML = "Enviado!";
+            this.resetInner(submitButton)
+            console.log(result)
+          })
+          .catch((error) => {
+            console.log(error);
+            submitButton.innerHTML = "No se pudo enviar."
+            this.resetInner(submitButton)
+          })
       } else {
         this.setComplete(steps3);
         console.log("No se manda nada");
@@ -553,6 +579,27 @@ export default {
     marcaloComoCompletado(field) {
       field.complete = true;
     },
+    resetInner: function (boton) {
+      setTimeout(() => {
+            boton.innerHTML = "Enviar"
+          }, 3000);
+    },
+    generarDatosParaEnviar: function() {
+      return {
+        consulta:       this.form.dudaPrincipal.val,
+        nombre:         this.form.nombrePersona.val,
+        apellido:       this.form.apellidoPersona.val,
+        email:          this.form.emailPersona.val,
+        telefono:       this.form.telefono.val,
+        empresa:        this.form.nombreEmpresa.val,
+        institucion:    this.form.nombreInstitucion.val,
+        area:           this.form.area.val,
+        cargo:          this.form.cargo.val,
+        atencion:       this.form.informacionAtencion.val,
+        tiempoEntrega:  this.form.tiempoCompra.val,
+        comentarios:    this.form.comentarios.val,
+      }
+    }
   },
 };
 </script>

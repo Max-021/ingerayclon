@@ -10,18 +10,11 @@
       <router-link
         :to="servicios[index - 1].url"
         class="servicio-container flex flex-col"
-        v-for="index in 8"
+        v-for="index in 9"
         :key="index"
       >
         <span class="pl-4 footer-menu-title"> {{ servicios[index - 1].nombreCorto }} </span>
         <img class="shadow-lg" :src="servicios[index - 1].miniBanner" />
-      </router-link>
-      <router-link v-if="supportIf" to="/contacto" class="servicio-container flex flex-col">
-        <span class="pl-4 footer-menu-title"> Atención Personalizada </span>
-        <img
-          class="shadow-lg"
-          src="@/assets/images/servicios/footer-menu/atencion.jpg"
-        />
       </router-link>
     </div>
   </div>
@@ -74,12 +67,13 @@ export default {
             (servicio) => servicio.url != exception
             );
       }
-      this.servicios = servicios.servicios.map((servicio) => {
-        return {
-          ...servicio,
-          miniBanner: require(`@/assets/images/servicios/footer-menu/${servicio.url}.jpg`)
-        }
-      })
+        this.servicios = servicios.servicios.map((servicio) => {
+          return {
+            ...servicio,
+            miniBanner: require(`@/assets/images/servicios/footer-menu/${servicio.url}.jpg`)
+          }
+        })
+        console.log(this.servicios)
     },
   },
 };

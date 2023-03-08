@@ -9,7 +9,7 @@
     <div class="carousel-container flex justify-center">
       <!-- Control button Left -->
       <button
-        class="h-6 w-6 mr-8 arrow left rounded-full"
+        class="h-6 w-6 mr-8 arrow left rounded-full self-center"
         @click="prev()"
       ></button>
       <!-- Carousel -->
@@ -41,7 +41,7 @@
         </div>
       </div>
       <!-- Control button right -->
-      <button class="h-6 w-6 arrow rounded-full" @click="next()"></button>
+      <button class="h-6 w-6 arrow rounded-full self-center" @click="next()"></button>
     </div>
     <a
       href="https://ingeraysrl.mercadoshops.com.ar/"
@@ -64,10 +64,10 @@
   display: flex;
 }
 .big-card {
-  height: 440px;
+  height: 425px;
 }
 .small-card {
-  height: 270px;
+  height: 225px;
 }
 .wrap-correction {
   display: flex;
@@ -89,17 +89,16 @@
 }
 button {
   margin-right: 0px;
-  margin-top: 10px;
 }
 .arrow {
   background-image: url("~@/assets/images/icons/arrow.svg");
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
-  transform: scale(3);
+  transform: scale(4);
 }
 .left {
-  transform: rotate(-180deg) scale(3);
+  transform: rotate(-180deg) scale(4);
 }
 </style>
 <script>

@@ -24,10 +24,10 @@
             </p>
           </template>
         </banner-box>
-        <clients @openText="showText = !showText"></clients>
+        <clients></clients>
       </div>
     </div>
-    <div class="bg-white" v-if="showText">
+    <div class="bg-white">
       <text-checklist
         title="Conozca más sobre"
         subtitle="Los valores que nos mueven"

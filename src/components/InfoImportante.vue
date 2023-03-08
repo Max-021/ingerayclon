@@ -1,59 +1,61 @@
 <template>
-  <div
-    class="important-info flex justify-between items-center w-full pl-4"
-    id="importantInfo"
-  >
-    <!-- INFO DE UBICACION -->
-    <div class="flex items-center ubicacion text-sm md:text-base">
-      <router-link to="/contacto" class="icon nav-icon"></router-link>
-      <div class="direccion flex flex-col">
-        <span id="direccion-esp">Campillo 2585 | C1427DCC | CABA | Argentina</span>
-        <!-- <span id="direccion-gen">Buenos Aires | Argentina</span> -->
+  <div class="color-and-position">
+    <div
+      class="important-info flex justify-between items-center w-full pl-4"
+      id="importantInfo"
+    >
+      <!-- INFO DE UBICACION -->
+      <div class="flex items-center ubicacion text-sm md:text-base">
+        <router-link :to="{name: 'Contacto', hash:'#direccion-mapa'}" class="icon nav-icon"></router-link>
+        <div class="direccion flex flex-col">
+          <router-link :to="{name: 'Contacto', hash:'#direccion-mapa'}">
+            <span id="direccion-esp">Campillo 2585 | C1427DCC | CABA | Argentina</span>
+          </router-link>
+        </div>
       </div>
-    </div>
-    <!-- INFO DE CONTACTO -->
-    <div class="flex items-center gap-4 whatsapp">
-      <div
-        class="
-        flex
-        gap-14
-        pr-4
-        text-xs
-        w-full
-        md:text-sm
-        items-center
-        text-center
-        responsive-text
-        "
-      >
-        <div class="flex gap-2 position-correction">
-          <router-link to="/contacto" class="icon whatsapp-icon"></router-link>
-          <button type="button" @click="sendWhatsapp('59767596')">
-            Diagnóstico por Imágenes
+      <!-- INFO DE CONTACTO -->
+      <div class="flex items-center gap-4 whatsapp">
+        <div
+          class="
+          flex
+          gap-10
+          pr-4
+          text-xs
+          w-full
+          md:text-sm
+          items-center
+          text-center
+          responsive-text
+          "
+        >
+          <div class="flex gap-2">
+            <router-link to="/contacto" class="icon whatsapp-icon"></router-link>
+            <button type="button" @click="sendWhatsapp('59767596')">
+              Diagnóstico por Imágenes
+            </button>
+          </div>
+          <button class="position-correction" type="button" @click="sendWhatsapp('41926163')">
+            Atención Comercial
+          </button>
+          <button class="position-correction" type="button" @click="sendWhatsapp('59767596')">
+            División Veterinaria
           </button>
         </div>
-        <button class="position-correction" type="button" @click="sendWhatsapp('41926163')">
-          Atención Comercial
-        </button>
-        <button class="position-correction" type="button" @click="sendWhatsapp('55044427')">
-          División Veterinaria
-        </button>
       </div>
     </div>
   </div>
 </template>
 <style>
-.important-info {
+.color-and-position {
   background-color: var(--dark-blue);
-  color: white;
   height: 4rem;
   width: 100vw;
   position: relative;
   left: calc(-50vw + 50%);
-  padding: 0 14rem;
 }
-.position-correction {
-  /* width: min(170px, 15vw); */
+.important-info {
+  color: white;
+  padding: 0 14rem;
 }
 .important-info > div > img {
   transition: all 0.5s ease-in-out;
@@ -62,7 +64,6 @@
   transition: all 0.3s ease-in-out;
 }
 #direccion-esp {
-  /* letter-spacing: 1px; */
   font-size: 90%;
 }
 #direccion-gen {
@@ -122,8 +123,16 @@
 .popover_content .popover_content_right {
   right: 0;
 }
+@media screen and (min-width: 1441px) {
+  .important-info {
+    padding: 0 22%;
+  }
+}
 
 @media screen and (max-width: 1000px) {
+  .important-info {
+    padding: 0 4rem;
+  }
   .responsive-text{
     font-size: 65%;
     padding-right: 12px;
@@ -188,6 +197,7 @@
 </style>
 <script>
 import { contactMixin } from "@/assets/js/contactMixin.js";
+import { Hash } from "crypto";
 export default {
   mixins: [contactMixin],
   data() {

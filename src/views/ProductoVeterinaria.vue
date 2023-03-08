@@ -1,25 +1,45 @@
 <template>
   <div class="padding-container flex flex-col gap-16 pb-16">
     <!-- Carousel -->
-    <div class="carousel relative h-fit w-full mt-4 flex inge-shadow-down">
-      <arrowless-carousel
+    <div class="bg-white relative h-fit mt-4 flex inge-shadow-down flex-wrap">
+      <div class="carousel h-fit w-full flex">
+        <arrowless-carousel
+        class="inner-carousel"
         :product_name="this.productInfo.product_dev_name"
         product_type="vet"
-      ></arrowless-carousel>
-      <div class="py-8 pr-12 flex flex-col gap-8">
-        <titles
-          :title="this.productInfo.category_name"
-          :subtitle="this.productInfo.product_name"
-        ></titles>
-        <p class="text-justify text-lg">
-          {{ this.productInfo.product_carousel_text }}
-        </p>
-        <button
-          class="contact-inge-button inge-shadow-down shadow-animated mt-8"
-        >
-          Quiero que me contacten
-        </button>
-      </div>
+        ></arrowless-carousel>
+        <div class="py-8 pr-12 flex flex-col gap-8 responive-correction">
+          <titles
+            :title="this.productInfo.category_name"
+            :subtitle="this.productInfo.product_name"
+          ></titles>
+          <p class="text-justify text-lg">
+            {{ this.productInfo.product_carousel_text }}
+          </p>
+          <button
+            class="contact-inge-button inge-shadow-down shadow-animated mt-8"
+            @click="showContactMenu = true"
+          >
+            Quiero que me contacten
+          </button>
+        </div>
+    </div>
+      <!-- Boton de Contacto -->
+      <button
+          @click="showPasos = true"
+          class="banner-contacto flex items-center gap-2 mb-10 -mt-2"
+      >
+        <div class="envelope"></div>
+        <div class="text">
+          <titles
+            title="Contáctenos"
+            subtitle="sobre este producto"
+            class="banner-contacto-title"
+            :fontSize="16"
+            :lineHeight="10"
+          ></titles>
+        </div>
+      </button>
       <a
         v-if="this.productInfo.product_shop_url"
         class="
@@ -111,6 +131,35 @@
         </router-link>
       </div>
     </div>
+    <!-- Modal de form de Contacto -->
+    <Modal
+      :header="false"
+      v-if="showContactMenu"
+      @close="showContactMenu = false"
+      large="sm"
+    >
+      <!-- Titulo del modal -->
+      <template #title> Datos de contacto </template>
+      <!-- Body y Footer del modal -->
+      <template #content>
+        <simple-contact-form
+          @close="showContactMenu = false"
+        ></simple-contact-form>
+      </template>
+    </Modal>
+    <!-- Modal del formulario de tres pasos -->
+    <Modal
+      :header="false"
+      v-if="showPasos"
+      large="xl"
+    >
+      <!-- Form del modal -->
+      <template #content>
+        <form-pasos
+        @close="showPasos = false"
+        ></form-pasos>
+      </template>
+    </Modal>
   </div>
 </template>
 <style scoped>
@@ -128,22 +177,51 @@
 .carousel {
   background-color: white !important;
 }
+.banner-contacto {
+  height: 50px;
+  background-color: #e6e6e6;
+  padding: 2rem 4rem;
+  width: 100%;
+}
+@media screen and (max-width: 830px) {
+  .carousel {
+    flex-direction: column;
+  }
+  .responive-correction{
+    padding: 0 2rem;
+    margin-bottom: 2rem;
+  }
+  .contact-inge-button{
+    margin-top: 0;
+  }
+  .inner-carousel {
+    align-self: center;
+  }
+}
 </style>
 <script>
 import { productMixin } from "../assets/js/productMixin";
 import ArrowlessCarouselVue from "../components/Carousels/ArrowlessCarousel/ArrowlessCarousel.vue";
 import PictureZoomVue from "../components/Common/PictureZoom.vue";
+import Modal from "../components/Modal/Modal.vue";
+import SimpleContactForm from "../components/Forms/SimpleContactForm.vue";
+import ContactForm from '../components/Forms/ContactForm.vue'
 
 export default {
   mixins: [productMixin],
   components: {
     "arrowless-carousel": ArrowlessCarouselVue,
     "picture-zoom-button": PictureZoomVue,
+    "Modal": Modal,
+    'simple-contact-form': SimpleContactForm,
+    'form-pasos': ContactForm,
   },
   data() {
     return {
       productInfo: "",
       products: [],
+      showContactMenu: false,
+      showPasos: false,
     };
   },
   created() {

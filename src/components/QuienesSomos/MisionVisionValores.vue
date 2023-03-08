@@ -18,7 +18,7 @@
           </p>
         </div>
         <button
-          class="contact-inge-button self-end"
+          class="contact-inge-button self-center"
           @click="setActive(section)"
         >
           Ver más

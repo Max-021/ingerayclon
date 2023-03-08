@@ -18,6 +18,11 @@ const routes = [
     component: () => import('../views/Servicios.vue'),
     children: ServicesRoutes
   },
+  {//Borrar cuando solucione el problema del padding en nuestras marcas en equipamiento
+    path: '/servicios/equipamiento',
+    name: 'Equipamiento',
+    component: () => import('../components/Servicios/equipamiento.vue')
+  },
   {//Acá cambiar el import del component una vez hecho
     path: '/productos',
     name: 'Productos',
@@ -61,14 +66,15 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
+    if (to.hash) {
+      return document.querySelector(to.hash).scrollIntoView({ behavior: 'smooth' });
     } else {
       return { x: 0, y: 0 }
     }
-  }
+  },
+  mode: 'history',
+  routes,
 })
 
 export default router

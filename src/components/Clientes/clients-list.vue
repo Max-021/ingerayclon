@@ -18,12 +18,11 @@
         />
       </li>
     </ul>
-    <button
+    <!-- <button
       class="contact-inge-button self-end px-8"
-      @click="$emit('openText')"
     >
       Ver más
-    </button>
+    </button> -->
   </div>
 </template>
 <style scoped>

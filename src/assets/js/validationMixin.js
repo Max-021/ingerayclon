@@ -27,8 +27,10 @@ export const validationMixins = {
             if (this.fieldsNotEmpty(fields)) {
                 this.setComplete(fields) // Acá me marca a todos como completos
                 // this.currentStep = this.min(3, this.currentStep + 1)
+                return true;
             } else {
                 this.setComplete(fields) // Acá busca cuales estan incompletos y los marca como tal
+                return false;
             }
         },
         sendIfComplete(fields) {

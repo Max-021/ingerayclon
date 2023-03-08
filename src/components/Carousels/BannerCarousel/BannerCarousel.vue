@@ -1,15 +1,15 @@
 <template>
-  <div class="carousel relative">
+  <div class="carousel relative carousel-correction">
     <button class="h-6 w-6 arrow left rounded-full" @click="prev()"></button>
     <div class="inner flex items-center" ref="inner" :style="innerStyles">
       <router-link
         :to="image.url"
         v-for="(image, index) in elements"
         :key="index"
-        class="w-screen"
+        class="link-img"
         ref="equipment_image"
       >
-        <img :src="getImageUrl(image.imageName)" :alt="image" />
+        <img class="banner-img" :src="getImageUrl(image.imageName)" :alt="image" />
       </router-link>
     </div>
     <button class="h-6 w-6 arrow rounded-full" @click="next()"></button>
@@ -19,12 +19,12 @@
 .carousel {
   width: 100%;
   overflow: hidden;
-  /* max-height: 630px; */
 }
 .inner {
   white-space: nowrap;
   width: fit-content;
   z-index: 2;
+  border: 1px solid black;
 }
 
 button {
@@ -34,6 +34,9 @@ button {
   top: 50%;
   right: 10%;
   z-index: 4;
+}
+.link-img {
+  width: 100vw;
 }
 .inner {
   transition: transform 1s ease-in-out;
@@ -48,6 +51,17 @@ button {
 .left {
   transform: rotate(-180deg) scale(3);
   left: 10%;
+}
+@media screen and (min-width: 1441px) {
+  .carousel-correction {
+    padding: 0 22%;
+  }
+  .link-img {
+    width: 100%;
+  }
+  .banner-img {
+    widows: 100%;
+  }
 }
 </style>
 <script>
@@ -66,14 +80,24 @@ export default {
     this.setStep();
     setInterval(() => {
       this.next();
-    }, 5000);
+    }, 20000);
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.setStep)
+    })
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.setStep)
   },
   methods: {
     getImageUrl(imageName) {
       return `${this.$imageCDN}/${imageName}`;
     },
     setStep() {
-      this.stepSize = `100vw`;
+      if(window.innerWidth > 1440) {
+        this.stepSize = `100%`;
+      } else {
+        this.stepSize = `100vw`;
+      }
     },
     next() {
       if (this.transitioning) return;

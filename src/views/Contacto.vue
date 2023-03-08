@@ -103,7 +103,7 @@
           subtitle="Nuestra Empresa"
           :fontSize="31"
         ></titles>
-        <ik-image path="/mapa.jpg" alt="imagen de mapa"></ik-image>
+        <ik-image id="direccion-mapa" path="/mapa.jpg" alt="imagen de mapa"></ik-image>
       </div>
     </div>
   </div>

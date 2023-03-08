@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="enviarFormulario">
+  <form ref="formNewsletter" @submit.prevent="enviarFormulario">
     <div class="flex bkg-light-gray">
       <div class="flex flex-col gap-6 p-8 w-1/2">
         <div>
@@ -14,20 +14,20 @@
         </div>
         <div class="flex flex-col">
           <div class="flex gap-2">
-            <input type="checkbox" name="answer1" id="answer1" />
+            <input v-model="information.answer1" type="checkbox" name="answer1" id="answer1" />
             <label for="answer1">Promociones y ofertas exclusivas.</label>
           </div>
           <div class="flex gap-2">
-            <input type="checkbox" name="answer2" id="answer2" />
+            <input v-model="information.answer2" type="checkbox" name="answer2" id="answer2" />
             <label for="answer2">Lanzamientos de productos.</label>
           </div>
           <div class="flex gap-2">
-            <input type="checkbox" name="answer3" id="answer3" />
+            <input v-model="information.answer3" type="checkbox" name="answer3" id="answer3" />
             <label for="answer3">Novedades y actualizaciones</label>
           </div>
         </div>
         <div class="flex gap-2 justify-start items-start">
-          <input type="checkbox" name="answer4" id="answer4" class="w-auto" />
+          <input v-model="information.answer4" type="checkbox" name="answer4" id="answer4" class="w-auto" />
           <label for="answer4"
             >Me gustaria recibir comunicaciones y promociones basadas en mis
             preferencias. Puedo cancelar mi suscripcion en cualquier momento
@@ -38,12 +38,12 @@
           >
         </div>
         <div class="flex gap-4">
-          <input type="text" placeholder="Nombre" class="w-1/4" />
-          <input type="text" placeholder="Apellido" class="w-1/4" />
-          <input type="email" placeholder="Correo electronico" class="w-2/4" />
+          <input v-model="information.nombre" name="nombre" type="text" placeholder="Nombre" class="w-1/4" />
+          <input v-model="information.apellido" name="apellido" type="text" placeholder="Apellido" class="w-1/4" />
+          <input v-model="information.mail" name="mail" type="email" placeholder="Correo electronico" class="w-2/4" />
         </div>
         <div class="flex justify-between">
-          <button type="submit" class="contact-inge-button px-8">
+          <button id="sub-button" type="submit" class="contact-inge-button px-8">
             Suscribirse
           </button>
           <button type="button" class="close-button" @click="$emit('close')">
@@ -64,11 +64,22 @@
   </form>
 </template>
 <script>
+import emailjs from 'emailjs-com'
+
 export default {
   data: function () {
     return {
       formHasError: false,
       errorMessage: "",
+      information: {
+        nombre: '',
+        apellido: '',
+        mail: '',
+        answer1: '',
+        answer2:'',
+        answer3: '',
+        answer4: '',
+      }
     };
   },
   methods: {
@@ -77,6 +88,29 @@ export default {
       let ningunoTieneError = this.ningunoTieneError(this.information);
 
       if (estanTodosCompletos && ningunoTieneError) {
+        let submitButton = document.getElementById('sub-button');
+        submitButton.innerHTML = "Enviando..."
+        const paraEnviar = {
+          nombre: this.information.nombre,
+          apellido: this.information.apellido,
+          mail: this.information.mail,
+          answer1: this.information.answer1 ? 'Suscripto' : 'No Suscripto',
+          answer2: this.information.answer2 ? 'Suscripto' : 'No Suscripto',
+          answer3: this.information.answer3 ? 'Suscripto' : 'No Suscripto',
+          answer4: this.information.answer4 ? 'Suscripto' : 'No Suscripto',
+        }
+        emailjs.send('service_mailweb','newsletter_template',paraEnviar,'7L68zCfT1wnoX0EhR')
+        .then((result) => {
+          //hacer algo para indicar que se mandó
+          submitButton.innerHTML = "Enviado!"
+          this.resetInner(submitButton);
+          this.resetForm();
+        })
+        .catch((error) => {
+          submitButton.innerHTML = "No se pudo enviar"
+          this.resetInner(submitButton);
+          console.log(error)
+        })
       } else {
         this.formHasError = true;
         if (!estanTodosCompletos) {
@@ -86,12 +120,28 @@ export default {
         }
       }
     },
-    estanTodosCompletos(array) {
-      return array.every((campo) => campo.value.trim() !== "");
+    estanTodosCompletos(datos) {
+      const array = [datos.nombre,datos.apellido,datos.mail]
+      return array.every((campo) => campo.trim() !== "");
     },
-    ningunoTieneError(array) {
+    ningunoTieneError(datos) {
+      const array = [datos.nombre,datos.apellido,datos.mail]
       return array.every((campo) => !campo.hasError);
     },
+    resetInner: function (boton) {
+      setTimeout(() => {
+            boton.innerHTML = "Enviar consulta"
+          }, 3000);
+    },
+    resetForm: function () {
+      this.information.nombre = '';
+      this.information.apellido = '';
+      this.information.mail = '';
+      this.information.answer1 = '';
+      this.information.answer2 = '';
+      this.information.answer3 = '';
+      this.information.answer4 = '';
+    }
   },
   watch: {
     formHasError: function (newVal, oldVal) {

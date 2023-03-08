@@ -44,7 +44,7 @@
       </div>
       <!-- Carousel "Los mas Buscados" -->
       <polimorfic-carousel
-        title="Galeria de Productos"
+        title="Galería de Productos"
         subtitle="Los más buscados"
         :isExtended="false"
         :elements="productos"
@@ -82,8 +82,8 @@
       "
     >
       <polimorfic-carousel
-        title="Nuestra linea para"
-        subtitle="Diagnostico Veterinario"
+        title="Nuestra línea para"
+        subtitle="Diagnóstico Veterinario"
         :isExtended="false"
         :elements="veterinaria"
         :showCheckout="true"
@@ -93,7 +93,6 @@
     <Modal
       :header="false"
       v-if="showContactMenu"
-      @close="showContactMenu = false"
       large="sm"
     >
       <!-- Titulo del modal -->
@@ -110,7 +109,8 @@
 
 <script>
 import PolimorficCarousel from "../components/Carousels/PolimorficCarousel/PolimorficCarousel";
-import BannerCarousel from "../components/Carousels/BannerCarousel/BannerCarousel.vue";
+import BannerCarousel from "../components/Carousels/BannerCarousel/NewBannerCarousel.vue";
+// import BannerCarousel from "../components/Carousels/BannerCarousel/BannerCarousel.vue";
 import ClientsCarousel from "../components/Carousels/ClientsCarousel/ClientsCarousel.vue";
 import carousels from "../assets/js/home.json";
 import Modal from "../components/Modal/Modal.vue";
@@ -160,10 +160,6 @@ export default {
 </script>
 
 <style scoped>
-/* estilos para corregir desfases */
-.padding-correction{
-  padding: 0 10rem;
-}
 /* Presentacion */
 .presentation {
   z-index: 8;

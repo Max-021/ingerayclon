@@ -50,7 +50,7 @@
           ></Icon>
           <Icon
             name="instagram"
-            link="https://www.instagram.com/p/CMK8U71DnXq/"
+            link="https://www.instagram.com/ingerayequipomedico/?hl=es"
             division="hum"
           ></Icon>
           <Icon
@@ -131,7 +131,7 @@
       <div class="col3 w-full">
         <div class="sub-col1 flex text-xl">
           <div class="separator">
-            <router-link to="/quienes-somos">Quiénes Somos</router-link>
+            <router-link to="/quienes-somos">Quienes Somos</router-link>
           </div>
           <div class="separator">
             <button type="button" @click="showAvisoLegalModal = true">
@@ -180,13 +180,7 @@
         <template #content>
           <div class="legal-container overflow-y-scroll">
             <div class="simple-text p-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-              tempore sequi doloribus nesciunt ipsum at culpa. Iure asperiores
-              possimus voluptatibus, debitis, aspernatur doloremque quia sit
-              dolorem cum explicabo architecto provident incidunt consequuntur
-              similique tenetur ea impedit, eligendi quasi iusto aliquam. Eaque
-              ducimus ut similique reprehenderit modi iure fugit inventore velit
-              officia! Molestias, impedit.
+              Las propiedades intelectuales y otros derechos sobre los materiales de este sitio web pertenecen a INGE RAY S.R.L. y a sus colaboradores, con domicilio en la calle Campillo 2585, C1427DCC, Ciudad Autónoma de Buenos Aires, Argentina. No se podrá hacer ningún tipo de publicación ni uso comercial de los materiales en el Sitio web sin la expresa autorización por escrito de INGE RAY S.R.L. No podrá poner ninguna parte de este Sitio web a disposición como parte de otro sitio web. Este Sitio web y su contenido no se podrá utilizar para crear una base de datos de ningún tipo, ni se lo podrá almacenar (en su totalidad o en parte) en bases de datos para que usted o terceros accedan a él, ni para distribuir cualquier base de datos que contenga la totalidad o parte del Sitio web y su contenido. Contáctenos a través de las siguientes formas de comunicación: por correo electrónico a ingeraysrl@gmail.com o telefónicamente a 11-4523-5792 / 11-4523-3999.
             </div>
           </div>
         </template>
@@ -204,13 +198,7 @@
         <template #content>
           <div class="legal-container overflow-y-scroll">
             <div class="simple-text p-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-              tempore sequi doloribus nesciunt ipsum at culpa. Iure asperiores
-              possimus voluptatibus, debitis, aspernatur doloremque quia sit
-              dolorem cum explicabo architecto provident incidunt consequuntur
-              similique tenetur ea impedit, eligendi quasi iusto aliquam. Eaque
-              ducimus ut similique reprehenderit modi iure fugit inventore velit
-              officia! Molestias, impedit.
+              El sistema no registra ninguna información personal relativa a sus visitantes, a menos que éstos decidan libremente proveerla a través de sus formularios de consulta o de suscripción al Newsletter. En este último caso, la información personal sólo es usada para responder al mensaje y entregar la información que el usuario requiera.
             </div>
           </div>
         </template>
@@ -248,7 +236,7 @@
 }
 /* DIVISIONES */
 .divisiones {
-  padding: 0 6rem;
+  padding: 0 14rem;
 }
 .active {
   font-weight: bolder;
@@ -260,7 +248,7 @@
 }
 /* REDES SOCIALES */
 .redes-sociales {
-  padding: 0 6rem;
+  padding: 0 14rem;
   height: 150px;
 }
 .redes {
@@ -286,7 +274,7 @@
 
 /* CONTACTO */
 .contacto {
-  padding: 3rem 6rem;
+  padding: 3rem 14rem;
   height: fit-content;
 }
 .col1 {
@@ -308,6 +296,16 @@
 }
 .separator:not(:last-child) {
   border-right: 1px solid white;
+}
+@media screen and (min-width: 1441px) {
+  .redes-sociales,
+  .divisiones {
+    padding: 0 22%;
+  }
+  .contacto {
+    padding: 3rem 22%;
+  }
+
 }
 @media screen and (max-width: 900px) {
   .prods-services,

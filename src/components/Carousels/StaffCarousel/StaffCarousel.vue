@@ -32,7 +32,7 @@
 </template>
 <style scoped >
 .card-container {
-  width: 270px;
+  max-width: 260px;
   padding-left: 5px;
   display: flex;
   justify-content: center;
@@ -48,6 +48,10 @@
 .inner {
   width: fit-content;
   transition: transform 0.2s;
+  height: 361px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 button {
   margin-right: 0px;
@@ -56,12 +60,12 @@ button {
 .arrow {
   background-image: url("~@/assets/images/icons/arrow.svg");
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
-  transform: scale(3);
+  transform: scale(4);
 }
 .left {
-  transform: rotate(-180deg) scale(3);
+  transform: rotate(-180deg) scale(4);
 }
 </style>
 <script>

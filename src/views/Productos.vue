@@ -7,11 +7,11 @@
             <titles
             title="Gran Variedad de"
             subtitle="Equipamiento Radiológico Nuevo o Puesto en Valor"
-            :fontSize="28"
+            :fontSize="31"
             ></titles>
           </template>
           <template v-slot:stuff>
-            <p class="simple-text mt-4 text-justify">
+            <p class="text-justify text-xl">
               Inge Ray ofrece equipamiento, instalaciones, partes, accesorios y soluciones  a la medida de las necesidades reales de cada cliente tanto en la esfera de instituciones públicas como privadas y desde centros de Diagnóstico por Imágenes y Empresas de Medicina Prepaga hasta Secretarías y Ministerios de Salud. Nuestro compromiso con el medioambiente y la sustentabilidad hace que nos enfoquemos de manera prioritaria en optimizar los recursos existentes basándonos en normas internacionales de recuperación y uso consciente de materiales mediante el protocolo de Análisis del Ciclo de Vida (Normas IRAM-ISO 14040 a 14049), teniendo por otra parte muy en cuenta  que las inversiones en tecnologías para el diagnóstico médico son pensadas a mediano y largo plazo cuando un cliente decide comenzar, actualizar o ampliar su operación. Estaremos allí para asesorar en las Áreas: Ingeniería, Comercial, Regulaciones y el enfoque Financiero.
             </p>
           </template>
@@ -21,40 +21,44 @@
     <!-- más buscados-->
     <div class="pb-16 pt-2 padding-container ">
       <titles
+        class="px-16 pb-8"
         title="Galería de Productos"
         subtitle="Los más buscados"
-        :fontSize="28"
+        :fontSize="31"
           ></titles>
-      <div class="flex flex-wrap justify-between items-around gap-3">
+      <div class="px-16 flex flex-wrap justify-between items-around gap-3">
         <mas-buscados 
         v-for="(producto, index) in masBuscados"
         sectionName="/productos/buscados/"
         :imageName="producto.image"
         :prodUrl = "producto.url"
         imageExtension=".png"
-        imageWith="290px"
+        imageWith="245px"
         ></mas-buscados>
       </div>
     </div>
     <!-- nuestras marcas nacionales e internacionales -->
-    <div class="py-16 padding-container bg-white">
+    <div class="py-10 padding-container bg-white">
         <titles
+        class="px-16"
         title="Nuestras Marcas"
         subtitle="Nacionales e Internacionales"
-        :fontSize="28"
+        :fontSize="31"
           ></titles>
-          <p class="simple-text mt-4 text-justify texto-marcas">
+          <p class="px-16 mt-4 text-justify texto-subtitulo">
             Además de la marca propia, tanto en Argentina como en países de la región proveemos soluciones, repuestos y servicios  en equipamiento de marcas locales e internacionales:
           </p>
-          <p class="simple-text mt-4 text-justify font-bold">
-            AGFA, ARIES, BIPLETT, BROWINER, CARESTREAM, CGR, CHISON, CLAYMOUNT, DEL BUENO, DIGINET, DIGIRAD, DINAN, DRGEM, DRTECH, ECORAY, EDAN, FILIPPO, FISHER, GBA, GENERAL ELECTRIC, GENERAL MEDICAL MERATE, GENERAY, HITACHI, HOLOGIC, IAE, IASA ELECTRONICA, ICRO, INSTRUMED, INSTRUMENTARIUM, INVELEC, IONORAY, JPI, KAILONG, KAIXIN, MAURIZZI, MEDITECH, MEMORAD Q, MINDRAY, MyF, ODEL, OEC, PHILIPS, PIMAX, PLANMECA, POSKOM, RAIX, REMS, SEDECAL, SHIMADZU, SIEMENS, SONOWIN, THALES, 
+          <p class="px-16 mt-4 text-justify font-bold texto-marcas">
+            AGFA, ARIES, BIPLETT, BROWINER, CARESTREAM, CGR, CHISON, CLAYMOUNT, DEL BUENO, DIGINET, DIGIRAD, DINAN, DRGEM, DRTECH, ECORAY, EDAN, FILIPPO, FISHER, GBA, GENERAL ELECTRIC, GENERAL MEDICAL MERATE, GENERAY, HITACHI, HOLOGIC, IAE, IASA ELECTRONICA, ICRO, INSTRUMED, INSTRUMENTARIUM, INVELEC, IONORAY, JPI, KAILONG, KAIXIN, MAURIZZI, MEDITECH, MEMORAD Q, MINDRAY, MyF, ODEL, OEC, PHILIPS, PIMAX, PLANMECA, POSKOM, RAIX, REMS, SEDECAL, SHIMADZU, SIEMENS, SONOWIN, THALES, TAMATHE, THOMSON, TOSHIBA, VAREX, VARIAN, VIEWORKS, VILA, VIOLA, YUESHEN.
           </p>
     </div>
     <!-- Eco responsabilidad -->
     <div class="py-16 padding-container">
-    <eco-seal></eco-seal>
+      <div class="px-16">
+        <eco-seal></eco-seal>
+      </div>
     </div>
-    <footer-menu></footer-menu>
+      <footer-menu></footer-menu>
   </div>
 </template>
 <script>
@@ -63,7 +67,7 @@ import buscados from '../assets/js/mas_buscados.json';
 import CustomPath from "@/components/CustomPath.vue";
 import { slavonMixin } from "@/assets/js/slavonMixin.js";
 import MaskRedirectButtonVue from "../components/Common/MaskRedirectButton.vue";
-import footerMenu from "../components/Servicios/footerMenu.vue";
+import footerParaProds from "../components/Footer/FooterParaProductos.vue";
 import BannerWithBot from "../components/Common/BannerWithBot.vue";
 import seccionEco from "../components/Servicios/seccionEco.vue";
 import PicZoomWithText from "../components/Common/PicZoomWithText.vue";
@@ -73,7 +77,7 @@ export default {
   components: { 
     CustomPath,
     MaskRedirectButtonVue,
-    'footer-menu': footerMenu,
+    'footer-menu': footerParaProds,
     'banner-box': BannerWithBot,
     'eco-seal': seccionEco,
     'mas-buscados': PicZoomWithText,
@@ -151,9 +155,11 @@ export default {
 // },
 </script>
 <style scoped>
+.texto-subtitulo {
+  font-size: 110%;
+}
 .texto-marcas {
-  /* font-size: 122%; */
-  font-size: 14pt;
+  font-size: 120%;
 }
 .row {
   display: flex;

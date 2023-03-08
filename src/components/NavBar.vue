@@ -109,7 +109,7 @@
             padding: 0 22%;
         }
     }
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1200px) {
         .padding-correction {
             padding: 0 4rem;
         }
