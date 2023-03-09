@@ -18,22 +18,26 @@
       class="divisiones h-16 flex justify-start items-center gap-10 text-white"
       :class="backgroundColor"
     >
-      <span class="active w-3/6 md:w-auto"
-        ><button
-          @click="mostrar = 'humanos'"
-          :class="{ active: mostrar === 'humanos' }"
-        >
-          Diagnóstico por Imágenes
-        </button></span
-      >
-      <span class="w-3/6 md:w-auto"
-        ><button
-          @click="mostrar = 'animales'"
-          :class="{ active: mostrar === 'animales' }"
-        >
-          División veterinaria
-        </button></span
-      >
+      <span class="active w-3/6 md:w-auto">
+        <router-link to="/productos">
+          <button
+            @click="mostrar = 'humanos'"
+            :class="{ active: mostrar === 'humanos' }"
+          >
+            Diagnóstico por Imágenes
+          </button>
+        </router-link>
+      </span>
+      <span class="w-3/6 md:w-auto">
+        <router-link to="/productos/veterinaria">
+          <button
+            @click="mostrar = 'animales'"
+            :class="{ active: mostrar === 'animales' }"
+          >
+            División veterinaria
+          </button>
+        </router-link>
+      </span>
     </div>
     <!-- Redes sociales -->
     <div
@@ -490,6 +494,16 @@ export default {
     seMuestraParaHumanos() {
       return this.mostrar === "humanos";
     },
+  },
+  watch: {
+    $route: function(to, from) {
+      let ruta = to.path.split('/')
+      if(ruta.at(-1) === 'veterinaria') {
+        this.mostrar = 'animales' 
+      } else {
+        this.mostrar = 'humanos'
+      }
+    }
   },
   computed: {
     backgroundColor() {

@@ -12,6 +12,7 @@
           <titles
             :title="this.productInfo.category_name"
             :subtitle="this.productInfo.product_name"
+            :fontSize="31"  
           ></titles>
           <p class="text-justify text-lg">
             {{ this.productInfo.product_carousel_text }}
@@ -67,7 +68,7 @@
     <!-- Caracteristicas -->
     <div class="flex flex-col gap-4 px-16">
       <div class="titles">
-        <titles subtitle="Características"></titles>
+        <titles :fontSize="31" subtitle="Características"></titles>
         <titles title="Destacables de este equipo" :fontSize="18"></titles>
       </div>
       <div
@@ -84,9 +85,12 @@
           width="19%"
         />
       </div>
-      <p class="text-justify text-lg two-columns-text">
+      <p class="text-justify text-lg two-columns-text altura-automatica" :style="textoCaracteristicasStyle">
         {{ this.productInfo.product_description }}
       </p>
+      <button @click="toggleText()" id="btn-caracts" class="contact-inge-button inge-shadow-down shadow-animated self-end">
+        Ver más
+      </button>
     </div>
     <!-- Galeria -->
     <div
@@ -111,6 +115,7 @@
       <titles
         title="Conozca más"
         subtitle="Productos para Medicina Veterinaria"
+        :fontSize="31"
       ></titles>
       <div class="grid grid-cols-4 grid-rows-2 gap-y-4 gap-8 mt-4">
         <router-link
@@ -163,6 +168,11 @@
   </div>
 </template>
 <style scoped>
+.altura-automatica {
+  max-height: 270px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
 .tab-label {
   color: var(--gray);
   position: relative;
@@ -205,7 +215,7 @@ import ArrowlessCarouselVue from "../components/Carousels/ArrowlessCarousel/Arro
 import PictureZoomVue from "../components/Common/PictureZoom.vue";
 import Modal from "../components/Modal/Modal.vue";
 import SimpleContactForm from "../components/Forms/SimpleContactForm.vue";
-import ContactForm from '../components/Forms/ContactForm.vue'
+import ContactForm from '../components/Forms/ContactForm.vue';
 
 export default {
   mixins: [productMixin],
@@ -222,6 +232,8 @@ export default {
       products: [],
       showContactMenu: false,
       showPasos: false,
+      textoCaracteristicasStyle: {},
+      amplificar: false,
     };
   },
   created() {
@@ -246,6 +258,25 @@ export default {
       immediate: true,
     },
   },
+  methods: {
+    toggleText() {
+      this.amplificar = !this.amplificar;
+      let textoBoton = document.getElementById('btn-caracts');
+      if(this.amplificar){
+        this.textoCaracteristicasStyle = {
+          maxHeight: 'none',
+          overflow: 'visible',
+        }
+        textoBoton.innerHTML = 'Ver menos'
+      }else{
+        this.textoCaracteristicasStyle = {
+          maxHeight: '270px',
+          overflow: 'hidden',
+        }
+        textoBoton.innerHTML = 'Ver más'
+      }
+    },
+  }
 };
 </script>
 <style>

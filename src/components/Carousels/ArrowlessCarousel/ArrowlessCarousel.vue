@@ -4,26 +4,18 @@
       <div class="inner flex items-center" ref="inner" :style="innerStyles">
         <img
           ref="equipment_image"
-          v-for="(image, index) in carouselImages"
-          :src="require(`@/assets/images/${imagesPath}/${image}`)"
-          :alt="image"
-          :key="index"
+          v-bind:src="getImgUrl(imgActual)"
+          :alt="carouselImages[imgActual]"
         />
-      </div>
-      <div class="control-buttons">
-        <button
-          class="h-6 w-6 arrow left rounded-full"
-          @click="prev()"
-        ></button>
-        <button class="h-6 w-6 arrow rounded-full" @click="next()"></button>
       </div>
     </div>
     <div class="flex gap-4 justify-center mb-4" id="carousel-dots">
       <div
-        class="circle rounded-full h-5 w-5 bg-gray-400"
-        :class="[index === stepNumber - 1 ? 'green-dot' : 'gray-dot']"
+        class="circle rounded-full h-5 w-5 bg-gray-400 carousel-btn"
+        :class="[index === imgActual ? 'green-dot' : 'gray-dot']"
         v-for="(card, index) in carouselImages"
         :key="index"
+        @click="mostrarImg(index)"
       ></div>
     </div>
   </div>
@@ -78,6 +70,9 @@ button {
 .left {
   transform: rotate(-180deg) scale(3);
 }
+.carousel-btn:hover {
+  cursor: pointer;
+}
 </style>
 <script>
 import { serviceMixin } from "../../../assets/js/serviceMixin";
@@ -96,6 +91,7 @@ export default {
       transitioning: false,
       carouselImages: [],
       imagesPath: "",
+      imgActual: 0,
     };
   },
   mounted() {
@@ -183,9 +179,17 @@ export default {
           break;
       }
     },
+    mostrarImg(indice) {
+      this.imgActual = indice;
+    },
+    getImgUrl(indice) {
+      console.log(`@/assets/images/${this.imagesPath}/${this.carouselImages[indice]}`)
+      return require(`@/assets/images/${this.imagesPath}/${this.carouselImages[indice]}`);
+    }
   },
   created() {
     this.setCarouselImages();
+    console.log(this.carouselImages)
   },
 };
 </script>

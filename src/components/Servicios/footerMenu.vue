@@ -73,7 +73,6 @@ export default {
             miniBanner: require(`@/assets/images/servicios/footer-menu/${servicio.url}.jpg`)
           }
         })
-        console.log(this.servicios)
     },
   },
 };

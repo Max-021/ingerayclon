@@ -107,7 +107,7 @@
         <div class="staff-description-card flex">
           <img
             :src="
-              require('@/assets/images/contacto/fotosPersonal/GERENTE_Matías_Penhos.jpg')
+              require('@/assets/images/contacto/fotosPersonal/GERENTE_Matias_Penhos.jpg')
             "
             width="310"
           />
